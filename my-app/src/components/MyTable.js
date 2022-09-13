@@ -1,9 +1,10 @@
 import React, { useMemo, useEffect, useState } from 'react'
-import { useTable } from 'react-table'
+import { useTable, useGlobalFilter } from 'react-table'
 import { COLUMNS } from './columns'
+import { GlobalFilter } from './GlobalFilter'
 import './MyTable.css'
 
-export const BasicTable = () => {
+export const MyTable = () => {
     const [mock_data_ajax, setMockData] = useState([]);
     
     useEffect(() => { getData(); }, []);
@@ -13,7 +14,7 @@ export const BasicTable = () => {
     const tableInstance = useTable({
         columns,
         data
-    })
+    }, useGlobalFilter)
 
     const { 
         getTableProps,
@@ -21,7 +22,11 @@ export const BasicTable = () => {
         headerGroups,
         rows,
         prepareRow,
+        state,
+        setGlobalFilter
     } = tableInstance
+
+    const { globalFilter } = state
 
     async function getData(){
         const response = await fetch('https://jsonplaceholder.typicode.com/todos');
@@ -30,7 +35,10 @@ export const BasicTable = () => {
     }
 
     return(
-        <table {...getTableProps()}>
+
+        <>
+        <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
+            <table {...getTableProps()}>
             <thead>
             {
                 headerGroups.map(headerGroup => (
@@ -64,5 +72,6 @@ export const BasicTable = () => {
 
             </tbody>
         </table>
+        </>
     )
 }
