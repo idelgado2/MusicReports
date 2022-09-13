@@ -1,11 +1,15 @@
-import React, { useMemo, useEffect, useState } from 'react'
+import React, { useMemo, useEffect, useState, useContext } from 'react'
+import { FilterContext } from './MyContext'
 import { useTable, useGlobalFilter } from 'react-table'
 import { COLUMNS } from './columns'
 import { GlobalFilter } from './GlobalFilter'
 import './MyTable.css'
 
+
 export const MyTable = () => {
     const [mock_data_ajax, setMockData] = useState([]);
+    const filter = useContext(FilterContext);
+
     
     useEffect(() => { getData(); }, []);
     const columns = useMemo(() => COLUMNS, [])
@@ -35,7 +39,6 @@ export const MyTable = () => {
     }
 
     return(
-
         <>
         <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
             <table {...getTableProps()}>

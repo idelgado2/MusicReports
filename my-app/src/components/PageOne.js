@@ -4,10 +4,11 @@ import { MyTable } from './MyTable';
 
 const PageOne = () => {
     const navigate = useNavigate();
+
     return (
         <>
           <h1>Page One</h1>
-          <button onClick={()=>navigate("/pagetwo")}>PageTwo</button>
+          <button onClick={()=>{navigate("/pagetwo");}}>PageTwo</button>
           <MyTable/>
         </>
     )
